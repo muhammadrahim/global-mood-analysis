@@ -1,7 +1,7 @@
 package to.the.moon
 
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import to.the.moon.twitter.Parser
 
