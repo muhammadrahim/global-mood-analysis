@@ -17,7 +17,6 @@ plugins {
     application
     id("application")
 }
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions.jvmTarget = "1.8" }
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(11))
@@ -40,11 +39,28 @@ dependencies {
     implementation("edu.stanford.nlp:stanford-corenlp:4.0.0")
     implementation("edu.stanford.nlp:stanford-corenlp:4.0.0:models")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-json")
+    implementation("org.apache.kafka:kafka-clients:2.4.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.1")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.12.1")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+//    testImplementation("org.jetbrains.kotlin:kotlin-test")
+//    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+//    testImplementation(platform("org.junit:junit-bom:5.7.1"))
+//    testImplementation("org.junit.jupiter:junit-jupiter")
 }
+
+
+
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions.jvmTarget = "11" }
 
 application {
     // Define the main class for the application.

@@ -9,6 +9,7 @@ import com.twitter.hbc.core.Constants
 import com.twitter.hbc.core.HttpHosts
 import com.twitter.hbc.core.endpoint.StatusesFilterEndpoint
 import com.twitter.hbc.core.processor.StringDelimitedProcessor
+import com.twitter.hbc.httpclient.BasicClient
 import com.twitter.hbc.httpclient.auth.Authentication
 import com.twitter.hbc.httpclient.auth.OAuth1
 import org.slf4j.Logger
@@ -20,18 +21,45 @@ import java.util.concurrent.TimeUnit.SECONDS
 
 
 @Component
-class TwitterStreamProducer {
-    @Value("\${consumer.key}") private lateinit var consumerKey: String
-    @Value("\${consumer.secret}") private lateinit var consumerSecret: String
-    @Value("\${token}") private lateinit var token: String
-    @Value("\${secret}") private lateinit var secret: String
+class TwitterStreamProducer(private val sentimentAnalysisService: SentimentAnalysisService) {
+
+    @Value("\${consumer.key}")
+    private lateinit var consumerKey: String
+
+    @Value("\${consumer.secret}")
+    private lateinit var consumerSecret: String
+
+    @Value("\${token}")
+    private lateinit var token: String
+
+    @Value("\${secret}")
+    private lateinit var secret: String
+
     private val logger: Logger = LoggerFactory.getLogger(TwitterStreamProducer::class.java)
+
     fun stream() {
+        val (msgQueue, twitterClient) = createClient()
+        while (!twitterClient.isDone) {
+            msgQueue.poll(5, SECONDS)?.let { json ->
+                TweetParser().parse(json).also { tweet ->
+                    handleTweet(tweet)
+                }
+            }
+        }
+    }
+
+    private fun handleTweet(tweet: Tweet) {
+        val sentimentResult = sentimentAnalysisService.analyse(tweet.text)
+        logger.info(tweet.text)
+        logger.info("sentiment: $sentimentResult")
+    }
+
+    private fun createClient(): Pair<LinkedBlockingDeque<String>, BasicClient> {
         val msgQueue = LinkedBlockingDeque<String>(1000)
         val hoseBirdHosts = HttpHosts(Constants.STREAM_HOST)
         val hoseBirdEndpoint = StatusesFilterEndpoint()
 
-        val terms: List<String> = Lists.newArrayList("n26")
+        val terms: List<String> = Lists.newArrayList("n26", "fuck")
         hoseBirdEndpoint.trackTerms(terms)
 
         val hoseBirdAuth: Authentication = OAuth1(consumerKey, consumerSecret, token, secret)
@@ -43,8 +71,6 @@ class TwitterStreamProducer {
             .processor(StringDelimitedProcessor(msgQueue))
             .build()
         twitterClient.connect()
-        while (!twitterClient.isDone) {
-            logger.info(msgQueue.poll(5, SECONDS))
-        }
+        return Pair(msgQueue, twitterClient)
     }
 }
