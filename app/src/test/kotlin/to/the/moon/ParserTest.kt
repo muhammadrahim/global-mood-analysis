@@ -3,16 +3,16 @@ package to.the.moon
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import to.the.moon.twitter.TweetParser
+import to.the.moon.twitter.Parser
 
-class TweetParserTest {
+class ParserTest {
 
     @Test
     fun `should parse twitter json into tweet`() {
         val json = """{
         "created_at": "Thu Mar 04 13:23:37 +0000 2021",
-        "id": 1367465757227978757,
-        "id_str": "1367465757227978757",
+        "id": 13674657572279787,
+        "id_str": "13674657572279787",
         "text": "n26",
         "truncated": false,
         "entities": {
@@ -86,8 +86,9 @@ class TweetParserTest {
         "retweeted": false,
         "lang": "und"
     }"""
-        val parser = TweetParser()
-        val actual = parser.parse(json)
+        val parser = Parser()
+        val actual = parser.tweet(json)
         assertEquals(actual.text, "n26")
+        assertEquals(actual.id, "13674657572279787")
     }
 }

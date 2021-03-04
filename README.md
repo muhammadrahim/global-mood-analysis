@@ -3,3 +3,15 @@
 Tool created for livestreaming tweets containing keywords to then apply [sentiment analysis](see https://en.wikipedia.org/wiki/Sentiment_analysis).
 
 This allows for a vague understanding of mood & sentiment around a certain topic or entity.
+
+To run:
+Add the following environment variables:
+```
+echo 'export CONSUMER_KEY=FILL_IN' >> ~/.zshenv
+echo 'export CONSUMER_SECRET=FILL_IN' >> ~/.zshenv
+echo 'export TWITTER_TOKEN=FILL_IN' >> ~/.zshenv
+echo 'export TWITTER_SECRET=FILL_IN' >> ~/.zshenv
+```
+
+Then run:
+`./gradlew run`

@@ -1,0 +1,6 @@
+twitter:
+  ckey: ${CONSUMER_KEY}
+  csecret: ${CONSUMER_SECRET}
+  token: ${TWITTER_TOKEN}
+  secret: ${TWITTER_SECRET}
+  keywords: n26

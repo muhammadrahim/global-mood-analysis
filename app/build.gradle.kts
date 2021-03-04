@@ -31,8 +31,6 @@ repositories {
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("com.google.guava:guava:29.0-jre")
-    implementation("com.twitter.twittertext:twitter-text:3.1.0")
     implementation("com.twitter:hbc-core:2.2.0")
     implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("ch.qos.logback:logback-core:1.2.3")
@@ -45,10 +43,6 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-core:2.12.1")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-//    testImplementation("org.jetbrains.kotlin:kotlin-test")
-//    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
-//    testImplementation(platform("org.junit:junit-bom:5.7.1"))
-//    testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 
