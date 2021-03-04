@@ -3,12 +3,12 @@
  */
 package to.the.moon
 
-import kotlin.test.Test
-import kotlin.test.assertNotNull
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 class AppTest {
-//    @Test fun testAppHasAGreeting() {
-//        val classUnderTest = App()
-//        assertNotNull(classUnderTest.greeting, "app should have a greeting")
-//    }
+    @Test
+    fun testAppHasAGreeting() {
+        assertEquals(2, 1+1)
+    }
 }

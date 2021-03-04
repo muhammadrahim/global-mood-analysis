@@ -1,4 +1,4 @@
-package to.the.moon
+package to.the.moon.sentimentanalysis
 
 class SentimentResult(var sentimentType: String? = null, var sentimentScore: Int = 0,
                       var sentimentClass: SentimentClassification? = null

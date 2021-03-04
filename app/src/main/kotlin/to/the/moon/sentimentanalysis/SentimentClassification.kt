@@ -1,4 +1,4 @@
-package to.the.moon
+package to.the.moon.sentimentanalysis
 
 class SentimentClassification(
     var veryPositive: Int = 0,

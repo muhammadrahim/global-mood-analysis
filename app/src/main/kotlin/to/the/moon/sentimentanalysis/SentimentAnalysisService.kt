@@ -1,4 +1,4 @@
-package to.the.moon
+package to.the.moon.sentimentanalysis
 
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations

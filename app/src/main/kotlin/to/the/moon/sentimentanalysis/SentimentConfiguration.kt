@@ -1,4 +1,4 @@
-package to.the.moon
+package to.the.moon.sentimentanalysis
 
 import edu.stanford.nlp.pipeline.StanfordCoreNLP
 import org.springframework.context.annotation.Bean
@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration
 import java.util.*
 
 @Configuration
-open class Configuration {
+open class SentimentConfiguration {
 
     @Bean
     open fun pipeline(): StanfordCoreNLP {

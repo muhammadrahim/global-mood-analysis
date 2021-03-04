@@ -1,4 +1,4 @@
-package to.the.moon
+package to.the.moon.twitter
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.kotlinModule

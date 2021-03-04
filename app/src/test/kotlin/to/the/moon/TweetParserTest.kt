@@ -1,11 +1,9 @@
 package to.the.moon
 
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.kotlinModule
-import com.fasterxml.jackson.module.kotlin.readValue
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import to.the.moon.twitter.TweetParser
 
 class TweetParserTest {
 
@@ -33,9 +31,9 @@ class TweetParserTest {
             "id": 583249098,
             "id_str": "583249098",
             "name": "MR",
-            "screen_name": "muhrahim95",
+            "screen_name": "username",
             "location": "",
-            "description": "🇸🇬 🇬🇧 🇪🇸 | software eng @ unicorn startup",
+            "description": "🇸🇬 🇬🇧 🇪🇸",
             "url": null,
             "entities": {
             "description": {
