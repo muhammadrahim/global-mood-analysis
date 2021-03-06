@@ -10,7 +10,6 @@ import edu.stanford.nlp.trees.Tree
 import org.springframework.stereotype.Service
 import kotlin.math.roundToInt
 
-
 @Service
 class SentimentAnalysisService(private val pipeline: StanfordCoreNLP) {
     fun analyse(text: String): SentimentResult = getSentimentResult(text)

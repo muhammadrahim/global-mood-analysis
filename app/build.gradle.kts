@@ -11,18 +11,42 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.4.20"
     id("org.springframework.boot") version "2.4.3"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-//    kotlin("jvm") version "1.4.20"
     // Apply the application plugin to add support for building a CLI application in Java.
     java
     application
     id("application")
 }
+
+val ktlint by configurations.creating
+
+val outputDir = "${project.buildDir}/reports/ktlint/"
+val inputFiles = project.fileTree(mapOf("dir" to "src", "include" to "**/*.kt"))
+
+val ktlintCheck by tasks.creating(JavaExec::class) {
+    inputs.files(inputFiles)
+    outputs.dir(outputDir)
+
+    description = "Check Kotlin code style."
+    classpath = ktlint
+    main = "com.pinterest.ktlint.Main"
+    args = listOf("src/**/*.kt")
+}
+
+val ktlintFormat by tasks.creating(JavaExec::class) {
+    inputs.files(inputFiles)
+    outputs.dir(outputDir)
+
+    description = "Fix Kotlin code style deviations."
+    classpath = ktlint
+    main = "com.pinterest.ktlint.Main"
+    args = listOf("-F", "src/**/*.kt")
+}
+
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(11))
     }
 }
-
 
 repositories {
     mavenCentral()
@@ -31,21 +55,29 @@ repositories {
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("com.twitter:hbc-core:2.2.0")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
-    implementation("ch.qos.logback:logback-core:1.2.3")
-    implementation("edu.stanford.nlp:stanford-corenlp:4.0.0")
-    implementation("edu.stanford.nlp:stanford-corenlp:4.0.0:models")
+    implementation("com.twitter:hbc-core:${Versions.HBC_CORE}")
+    implementation("ch.qos.logback:logback-classic:${Versions.LOGBACK}")
+    implementation("ch.qos.logback:logback-core:${Versions.LOGBACK}")
+    implementation("edu.stanford.nlp:stanford-corenlp:${Versions.CORE_NLP}")
+    implementation("edu.stanford.nlp:stanford-corenlp:${Versions.CORE_NLP}:models")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-json")
-    implementation("org.apache.kafka:kafka-clients:2.4.0")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.1")
-    implementation("com.fasterxml.jackson.core:jackson-core:2.12.1")
+    implementation("org.apache.kafka:kafka-clients:${Versions.KAFKA}")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.JACKSON}")
+    implementation("com.fasterxml.jackson.core:jackson-core:${Versions.JACKSON}")
+    implementation("com.pinterest:ktlint:${Versions.KTLINT}")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-
+object Versions {
+    const val KTLINT = "0.40.0"
+    const val CORE_NLP = "4.0.0"
+    const val JACKSON = "2.12.1"
+    const val KAFKA = "2.4.0"
+    const val HBC_CORE = "2.2.0"
+    const val LOGBACK = "1.2.3"
+}
 
 tasks.test {
     useJUnitPlatform()

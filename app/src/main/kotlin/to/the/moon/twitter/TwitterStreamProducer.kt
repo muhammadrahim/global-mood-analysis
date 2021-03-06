@@ -19,7 +19,6 @@ import to.the.moon.sentimentanalysis.SentimentAnalysisService
 import java.util.concurrent.LinkedBlockingDeque
 import java.util.concurrent.TimeUnit.SECONDS
 
-
 @Component
 class TwitterStreamProducer(
     private val sentimentAnalysisService: SentimentAnalysisService,
